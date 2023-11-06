@@ -3,15 +3,19 @@ package com.wolfsurwail.snake;
 import com.javarush.engine.cell.Game;
 import com.javarush.engine.cell.*;
 
+import java.util.Random;
+
 public class SnakeGame extends Game {
-    public static final int WIDTH = 15;
-    public static final int HEIGHT = 15;
+    public static final int WIDTH = getRandomInt();
+    public static final int HEIGHT = getRandomInt();
     private Snake snake;
     private int turnDelay;
     private Apple apple;
     private boolean isGameStopped;
-    private static final int GOAL = 28;
+    private static final int GOAL = WIDTH * HEIGHT - 1;
     private int score;
+    private static Color randomColorOne = getRandomColor();
+    private static Color randomColorTwo = getRandomColor();
 
     @Override
     public void initialize() {
@@ -48,13 +52,51 @@ public class SnakeGame extends Game {
     }
 
     private void drawScene() {
+        int i = 0;
         for (int y = 0; y < HEIGHT ; y++) {
             for (int x = 0; x < WIDTH ; x++) {
-                setCellValueEx(x,y, Color.DARKSEAGREEN,"");
+                if(HEIGHT % 2 == 0 && WIDTH % 2 == 0) {
+                    if (i % 2 == 0) {
+                        setCellValueEx(x, y, randomColorOne, "");
+                        i++;
+                    } else {
+                        setCellValueEx(x, y, randomColorTwo, "");
+                        i++;
+                    }
+                } else if (HEIGHT % 2 == 0 || WIDTH % 2 == 0) {
+                    if (i % 4 == 0) {
+                        setCellValueEx(x, y, randomColorOne, "");
+                        i++;
+                    } else {
+                        setCellValueEx(x, y, randomColorTwo, "");
+                        i++;
+                    }
+                }
+                else {
+                    if (i % 3 == 0) {
+                        setCellValueEx(x, y, randomColorOne, "");
+                        i++;
+                    } else {
+                        setCellValueEx(x, y, randomColorTwo, "");
+                        i++;
+                    }
+                }
             }
         }
         snake.draw(this);
         apple.draw(this);
+    }
+
+    public static Color getRandomColor() {
+        Color[] colors = Color.values();
+        Random random = new Random();
+        int index = random.nextInt(colors.length);
+        return colors[index];
+    }
+
+    public static int getRandomInt() {
+        Random random = new Random();
+        return random.nextInt(15) + 5;
     }
 
     @Override

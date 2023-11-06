@@ -5,6 +5,7 @@ import com.javarush.engine.cell.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Snake {
     private List<GameObject> snakeParts = new ArrayList<>();
@@ -12,6 +13,7 @@ public class Snake {
     private static final String BODY_SIGN = "\u26AB";
     public boolean isAlive = true;
     private Direction direction = Direction.LEFT;
+    private static Color randomColor = getRandomColor();
 
     public Snake(int x, int y) {
         snakeParts.add(new GameObject(x, y));
@@ -20,13 +22,20 @@ public class Snake {
     }
 
     public void draw(Game game) {
-        Color color = !isAlive ? Color.RED : Color.BLACK;
+        Color color = !isAlive ? Color.RED : randomColor;
 
         for (int i = 0; i < snakeParts.size(); i++) {
             GameObject gameObject = snakeParts.get(i);
             String sign = (i != 0) ? BODY_SIGN : HEAD_SIGN;
             game.setCellValueEx(gameObject.x, gameObject.y, Color.NONE, sign, color, 75);
         }
+    }
+
+    public static Color getRandomColor() {
+        Color[] colors = Color.values();
+        Random random = new Random();
+        int index = random.nextInt(colors.length);
+        return colors[index];
     }
 
     public void setDirection(Direction direction) {
