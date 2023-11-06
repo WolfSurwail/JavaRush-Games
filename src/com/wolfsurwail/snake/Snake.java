@@ -1,4 +1,4 @@
-package com.wolfsurwail.snakegame;
+package com.wolfsurwail.snake;
 
 import com.javarush.engine.cell.Game;
 import com.javarush.engine.cell.*;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Snake {
-    private List<GameObject> snakeParts = new ArrayList<GameObject>();
+    private List<GameObject> snakeParts = new ArrayList<>();
     private static final String HEAD_SIGN = "\uD83D\uDC7E";
     private static final String BODY_SIGN = "\u26AB";
     public boolean isAlive = true;
@@ -86,7 +86,7 @@ public class Snake {
 
     public void removeTail() {
         snakeParts.remove(snakeParts.size() - 1);
-
+        
     }
 
     public boolean checkCollision(GameObject gameObject) {

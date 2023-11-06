@@ -1,4 +1,4 @@
-package com.wolfsurwail.snakegame;
+package com.wolfsurwail.snake;
 
 public enum Direction {
     UP,
@@ -6,4 +6,3 @@ public enum Direction {
     DOWN,
     LEFT
 }
-

@@ -1,5 +1,4 @@
-package com.wolfsurwail.snakegame;
-
+package com.wolfsurwail.snake;
 import com.javarush.engine.cell.*;
 
 public class Apple extends GameObject {

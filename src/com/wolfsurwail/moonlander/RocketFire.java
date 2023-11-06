@@ -9,17 +9,8 @@ public class RocketFire extends GameObject {
     private int frameIndex;
     private boolean isVisible;
 
-    @Override
-    public void draw(Game game) {
-        if (!isVisible) {
-            return;
-        }
-        nextFrame();
-        super.draw(game);
-    }
-
     public RocketFire(List<int[][]> frameList) {
-        super(0,0, frameList.get(0));
+        super(0, 0, frameList.get(0));
         this.frames = frameList;
         this.frameIndex = 0;
         this.isVisible = false;
@@ -31,6 +22,15 @@ public class RocketFire extends GameObject {
             frameIndex = 0;
         }
         matrix = frames.get(frameIndex);
+    }
+
+    @Override
+    public void draw(Game game) {
+        if (!isVisible) {
+            return;
+        }
+        nextFrame();
+        super.draw(game);
     }
 
     public void show() {

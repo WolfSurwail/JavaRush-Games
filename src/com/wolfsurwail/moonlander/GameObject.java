@@ -1,4 +1,5 @@
 package com.wolfsurwail.moonlander;
+
 import com.javarush.engine.cell.*;
 
 public class GameObject {
@@ -7,6 +8,7 @@ public class GameObject {
     public int[][] matrix;
     public int width;
     public int height;
+
 
     public GameObject(double x, double y, int[][] matrix) {
         this.x = x;
@@ -17,7 +19,7 @@ public class GameObject {
     }
 
     public void draw(Game game) {
-        if (matrix == null) {
+        if(matrix == null) {
             return;
         }
 

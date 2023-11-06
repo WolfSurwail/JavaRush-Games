@@ -12,7 +12,7 @@ public class RoadManager {
     public static final int RIGHT_BORDER = RacerGame.WIDTH - RacerGame.ROADSIDE_WIDTH;
     private static final int FIRST_LANE_POSITION = 16;
     private static final int FOURTH_LANE_POSITION = 44;
-    private List<RoadObject> items = new ArrayList<RoadObject>();
+    private List<RoadObject> items = new ArrayList<>();
     private static final int PLAYER_CAR_DISTANCE = 12;
     private int passedCarsCount = 0;
 
@@ -71,7 +71,7 @@ public class RoadManager {
     }
 
     private void deletePassedItems() {
-        for (RoadObject item : new ArrayList<RoadObject>(items)) {
+        for (RoadObject item : new ArrayList<>(items)) {
             if (item.y >= RacerGame.HEIGHT) {
                 items.remove(item);
                 if (item.type != RoadObjectType.THORN) {

@@ -1,4 +1,4 @@
-package com.wolfsurwail.snakegame;
+package com.wolfsurwail.snake;
 
 import com.javarush.engine.cell.Game;
 import com.javarush.engine.cell.*;

@@ -1,4 +1,4 @@
-package com.wolfsurwail.snakegame;
+package com.wolfsurwail.snake;
 
 public class GameObject {
     public int x;

@@ -9,17 +9,10 @@ public class Rocket extends GameObject {
     private double speedX = 0;
     private double boost = 0.05;
     private double slowdown = boost / 10;
+
     private RocketFire downFire;
     private RocketFire leftFire;
     private RocketFire rightFire;
-
-    @Override
-    public void draw(Game game) {
-        super.draw(game);
-        downFire.draw(game);
-        leftFire.draw(game);
-        rightFire.draw(game);
-    }
 
     public Rocket(double x, double y) {
         super(x, y, ShapeMatrix.ROCKET);
@@ -38,10 +31,8 @@ public class Rocket extends GameObject {
 
         if (isLeftPressed) {
             speedX -= boost;
-            x += speedX;
         } else if (isRightPressed) {
             speedX += boost;
-            x += speedX;
         } else if (speedX > slowdown) {
             speedX -= slowdown;
         } else if (speedX < -slowdown) {
@@ -122,5 +113,13 @@ public class Rocket extends GameObject {
         } else {
             rightFire.hide();
         }
+    }
+
+    @Override
+    public void draw(Game game) {
+        super.draw(game);
+        downFire.draw(game);
+        leftFire.draw(game);
+        rightFire.draw(game);
     }
 }
