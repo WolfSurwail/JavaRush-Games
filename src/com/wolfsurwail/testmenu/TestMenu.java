@@ -4,9 +4,9 @@ import com.javarush.engine.cell.Game;
 import com.javarush.engine.cell.*;
 
 public class TestMenu extends Game {
-    private static final int WIDTH = 11;
-    private static final int HEIGHT = 5;
-    private MenuGameObject[][] menuGameObjects = new MenuGameObject[HEIGHT][WIDTH];
+    private static final int MENU_WIDTH = 11;
+    private static final int MENU_HEIGHT = 10;
+    private MenuGameObject[][] menuGameObjects = new MenuGameObject[MENU_HEIGHT][MENU_WIDTH];
 
 
     @Override
@@ -16,10 +16,14 @@ public class TestMenu extends Game {
     }
 
     public void drawMenu() {
-        drawScreenMenu(WIDTH,HEIGHT, Color.GRAY);
+        drawScreenMenu(MENU_WIDTH,MENU_HEIGHT, Color.GRAY);
+        pasteText("хуй",1,1);
         drawSizeGameMenu5x1(0,1,Color.GRAY);
         drawSizeGameMenu5x1(2,1,Color.GRAY);
-        drawSizeGameMenu5x1(3,1,Color.GRAY);
+        drawSizeGameMenu5x1(4,1,Color.GRAY);
+        drawSizeGameMenu5x1(0,6,Color.GRAY);
+        drawSizeGameMenu5x1(2,6,Color.GRAY);
+        drawSizeGameMenu5x1(4,6,Color.GRAY);
 
     }
 
@@ -42,11 +46,11 @@ public class TestMenu extends Game {
 
     @Override
     public void onMouseLeftClick(int x, int y) {
-        openTile(x, y);
+        openTileMenu(x, y);
         replaceMenu(x,y);
     }
 
-    private void openTile(int x, int y) {
+    private void openTileMenu(int x, int y) {
         MenuGameObject menuGameObject = menuGameObjects[y][x];
 
         if (!menuGameObject.isOpen) {
@@ -61,29 +65,24 @@ public class TestMenu extends Game {
         menuGameObjects[y][x] = new MenuGameObject(x,y,true,false);
     }
 
-    private void replaceMenu(int lineX, int y) {
-        if(checkMenuIsAnyOpen()) {
-            for (int x = lineX; x < WIDTH; x++) {
-                setCellColor(x,y,Color.RED);
-            }
-        }
-    }
-
-    private boolean checkMenuIsAnyOpen() {
-        int count = 0;
-        for (int y = 0; y < menuGameObjects.length; y++) {
-            for (int x = 0; x < menuGameObjects.length; x++) {
-                if (this.menuGameObjects[y][x] != null) {
-                    boolean flag = this.menuGameObjects[y][x].isFlag;
-                    if (flag) {
-                        count++;
-                        if (count > 1) {
-                            return true;
-                        }
+    private void replaceMenu(int aX, int y) {
+        for (MenuGameObject[] menuGameObject : menuGameObjects) {
+            for (int x = 0; x < MENU_WIDTH; x++) {
+                if (menuGameObject[x] != null) {
+                    if (menuGameObject[x].isFlag) {
+                        setCellColor(x,y,Color.RED);
                     }
                 }
             }
         }
-        return false;
+        setCellColor(aX,y,Color.GREEN);
+    }
+
+    private void pasteText(String s, int startX, int startY ) {
+        for (char c : s.toCharArray()) {
+            for (int x = startX; x < s.length(); x++) {
+                setCellValueEx(x,startY, Color.SILVER, String.valueOf(c), Color.BLACK,80);
+            }
+        }
     }
 }
