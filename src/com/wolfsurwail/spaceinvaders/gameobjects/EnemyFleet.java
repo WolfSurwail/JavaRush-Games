@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EnemyFleet {
-    private static final int ROWS_COUNT = 3;
-    private static final int COLUMNS_COUNT = 10;
+    private static int ROWS_COUNT = 0;
+    private static int COLUMNS_COUNT = 0;
     private static final int STEP = ShapeMatrix.ENEMY.length + 1;
 
     private List<EnemyShip> ships;
@@ -23,9 +23,45 @@ public class EnemyFleet {
 
     private void createShips() {
         ships = new ArrayList<>();
-        for (int y = 0; y < ROWS_COUNT; y++) {
-            for (int x = 0; x < COLUMNS_COUNT; x++) {
-                ships.add(new EnemyShip(x * STEP, y * STEP + 12));
+        if (SpaceInvadersGame.gameLevel == 1) {
+            ROWS_COUNT  = 1;
+            COLUMNS_COUNT = 5;
+            for (int y = 0; y < 1; y++) {
+                for (int x = 0; x < 5; x++) {
+                    ships.add(new EnemyShip(x * STEP, y * STEP + 12));
+                }
+            }
+        } else if (SpaceInvadersGame.gameLevel == 2) {
+            ROWS_COUNT  = 1;
+            COLUMNS_COUNT = 10;
+            for (int y = 0; y < ROWS_COUNT; y++) {
+                for (int x = 0; x < COLUMNS_COUNT; x++) {
+                    ships.add(new EnemyShip(x * STEP, y * STEP + 12));
+                }
+            }
+        } else if (SpaceInvadersGame.gameLevel == 3) {
+            ROWS_COUNT  = 2;
+            COLUMNS_COUNT = 5;
+            for (int y = 0; y < ROWS_COUNT; y++) {
+                for (int x = 0; x < COLUMNS_COUNT; x++) {
+                    ships.add(new EnemyShip(x * STEP, y * STEP + 12));
+                }
+            }
+        } else if (SpaceInvadersGame.gameLevel == 4) {
+            ROWS_COUNT  = 2;
+            COLUMNS_COUNT = 10;
+            for (int y = 0; y < ROWS_COUNT; y++) {
+                for (int x = 0; x < COLUMNS_COUNT; x++) {
+                    ships.add(new EnemyShip(x * STEP, y * STEP + 12));
+                }
+            }
+        } else {
+            ROWS_COUNT  = 3;
+            COLUMNS_COUNT = 10;
+            for (int y = 0; y < ROWS_COUNT; y++) {
+                for (int x = 0; x < COLUMNS_COUNT; x++) {
+                    ships.add(new EnemyShip(x * STEP, y * STEP + 12));
+                }
             }
         }
 
@@ -94,7 +130,7 @@ public class EnemyFleet {
     }
 
     private double getSpeed() {
-        int count = ships.size();
+        int count = ships.size() * 5;
         double speed = 3. / count;
         return speed > 2. ? 2. : speed;
     }

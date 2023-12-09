@@ -26,6 +26,8 @@ public class SpaceInvadersGame extends Game {
     private int animationsCount;
     private int score;
 
+    public static int gameLevel = 1;
+
     @Override
     public void initialize() {
         setScreenSize(WIDTH, HEIGHT);
@@ -191,8 +193,20 @@ public class SpaceInvadersGame extends Game {
         isGameStopped = true;
         stopTurnTimer();
 
-        if (isWin) {
-            showMessageDialog(Color.NONE, "YOU WIN", Color.GREEN, 50);
+        if (isWin && gameLevel == 1) {
+            gameLevel++;
+            showMessageDialog(Color.NONE, "Level #" + gameLevel, Color.GREEN, 50);
+        } else if (isWin && gameLevel == 2) {
+            gameLevel++;
+            showMessageDialog(Color.NONE, "Level #" + gameLevel, Color.GREEN, 50);
+        } else if (isWin && gameLevel == 3) {
+            gameLevel++;
+            showMessageDialog(Color.NONE, "Level #" + gameLevel, Color.GREEN, 50);
+        } else if (isWin && gameLevel == 4) {
+            gameLevel++;
+            showMessageDialog(Color.NONE, "Level #" + gameLevel, Color.GREEN, 50);
+        } else if (isWin && gameLevel == 5) {
+            showMessageDialog(Color.NONE, "YOU WIN" + gameLevel, Color.GREEN, 50);
         } else {
             showMessageDialog(Color.NONE, "GAME OVER", Color.RED, 50);
         }
