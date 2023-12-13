@@ -1,4 +1,4 @@
-package com.wolfsurwail.testmenu;
+package com.wolfsurwail.game2048;
 
 class MenuGameObject {
     public int x;

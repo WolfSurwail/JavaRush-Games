@@ -17,13 +17,13 @@ public class TestMenu extends Game {
 
     public void drawMenu() {
         drawScreenMenu(MENU_WIDTH,MENU_HEIGHT, Color.GRAY);
-        pasteText("хуй",1,1);
         drawSizeGameMenu5x1(0,1,Color.GRAY);
         drawSizeGameMenu5x1(2,1,Color.GRAY);
         drawSizeGameMenu5x1(4,1,Color.GRAY);
         drawSizeGameMenu5x1(0,6,Color.GRAY);
         drawSizeGameMenu5x1(2,6,Color.GRAY);
         drawSizeGameMenu5x1(4,6,Color.GRAY);
+        pasteText("хуй",1,1);
 
     }
 
@@ -79,10 +79,10 @@ public class TestMenu extends Game {
     }
 
     private void pasteText(String s, int startX, int startY ) {
-        for (char c : s.toCharArray()) {
-            for (int x = startX; x < s.length(); x++) {
-                setCellValueEx(x,startY, Color.SILVER, String.valueOf(c), Color.BLACK,80);
-            }
+        char[] chars = s.toCharArray();
+        for (char c : chars) {
+            setCellValueEx(startX,startY, Color.GOLD, String.valueOf(c), Color.BLACK,80);
+            startX++;
         }
     }
 }
