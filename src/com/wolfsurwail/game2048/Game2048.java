@@ -19,14 +19,6 @@ public class Game2048 extends Game {
     @Override
     public void initialize() {
         createMenu();
-        while (!isGameStarted ) {
-            if (spawnInRound > 0 && stopPlay > 0 && sizeMapCase) {
-                setScreenSize(SIDE, SIDE);
-                createGame();
-                drawScene();
-                isGameStarted = true;
-            }
-        }
     }
 
     private void createMenu() {
