@@ -2,65 +2,56 @@ package com.wolfsurwail.game2048;
 
 import com.javarush.engine.cell.*;
 
+import java.util.Random;
+
 public class Game2048 extends Game {
-    private static int SIDE = 4;
+    private static final int SIDE = 4;
     private int[][] gameField = new int[SIDE][SIDE];
     private boolean isGameStopped = false;
     private int score = 0;
-    private static final int MENU_WIDTH = 20;
-    private static final int MENU_HEIGHT = 24;
-    private MenuGameObject[][] menuGameObjects = new MenuGameObject[MENU_HEIGHT][MENU_WIDTH];
-    private boolean sizeMapCase;
-    private int stopPlay = 0;
-    private int spawnInRound = 0;
-    private boolean isGameStarted;
+    private int gameStoppedWith = 2048;
 
+    private static final Color color2 = getRandomColor();
+    private static final Color color3 = getRandomColor();
+    private static final Color color4 = getRandomColor();
+    private static final Color color5 = getRandomColor();
+    private static final Color color6 = getRandomColor();
+    private static final Color color7 = getRandomColor();
+    private static final Color color8 = getRandomColor();
+    private static final Color color9 = getRandomColor();
+    private static final Color color10 = getRandomColor();
+    private static final Color color11 = getRandomColor();
+    private static final Color color12 = getRandomColor();
+    private static final Color color13 = getRandomColor();
+    private static final Color color14 = getRandomColor();
+    private static final Color color15 = getRandomColor();
+    private static final Color color16 = getRandomColor();
+
+    private void createGameStoppedWith() {
+        Random random = new Random();
+        switch (random.nextInt(5) + 1) {
+            case 1: gameStoppedWith = 4096; break;
+            case 2: gameStoppedWith = 8192; break;
+            case 3: gameStoppedWith = 16384; break;
+            case 4: gameStoppedWith = 32768; break;
+            default: gameStoppedWith = 2048;
+        }
+    }
+
+    private static Color getRandomColor() {
+        Color[] colors = Color.values();
+        Random random = new Random();
+        int index = random.nextInt(colors.length);
+        return colors[index];
+    }
 
     @Override
     public void initialize() {
-        createMenu();
-    }
-
-    private void createMenu() {
-        drawScreenMenu(MENU_WIDTH,MENU_HEIGHT,Color.SILVER);
-        showGrid(true);
-        pasteText("Выбери режимы:", 3,2);
-        pasteText("Размер карты:", 1,4);
-
-        pasteText("4х4",2,7);
-        pasteText("5х5",6,7);
-        pasteText("6х6",10,7);
-        pasteText("7х7",14,7);
-
-        draw3x3Cube(2,6,Color.GOLD);
-        draw3x3Cube(6,6,Color.GOLD);
-        draw3x3Cube(10,6,Color.GOLD);
-        draw3x3Cube(14,6,Color.GOLD);
-
-        pasteText("До скольки играем:",1,12);
-
-        pasteText("2048",3,14);
-        pasteText("4096",8,14);
-        pasteText("8192",13,14);
-
-        drawRed(4,16);
-        drawRed(9,16);
-        drawRed(14,16);
-
-        pasteText("Появление за раз:",1,18);
-
-        pasteText("1",6,20);
-        pasteText("2",10,20);
-        pasteText("3",14,20);
-
-        drawRed(6,22);
-        drawRed(10,22);
-        drawRed(14,22);
-    }
-
-    private void drawRed(int startX, int startY) {
-        setCellColor(startX,startY,Color.RED);
-        setMenuGameObjects(startX,startY);
+        setScreenSize(SIDE, SIDE);
+        createGame();
+        drawScene();
+        createGameStoppedWith();
+        System.out.println(gameStoppedWith);
     }
 
     @Override
@@ -118,7 +109,7 @@ public class Game2048 extends Game {
     }
 
     private void createNewNumber() {
-        if (getMaxTileValue() >= stopPlay) {
+        if (getMaxTileValue() >= gameStoppedWith) {
             win();
             return;
         }
@@ -168,31 +159,35 @@ public class Game2048 extends Game {
             case 0:
                 return Color.WHITE;
             case 2:
-                return Color.PLUM;
+                return color2;
             case 4:
-                return Color.SLATEBLUE;
+                return color3;
             case 8:
-                return Color.DODGERBLUE;
+                return color4;
             case 16:
-                return Color.DARKTURQUOISE;
+                return color5;
             case 32:
-                return Color.MEDIUMSEAGREEN;
+                return color6;
             case 64:
-                return Color.LIMEGREEN;
+                return color7;
             case 128:
-                return Color.DARKORANGE;
+                return color8;
             case 256:
-                return Color.SALMON;
+                return color9;
             case 512:
-                return Color.ORANGERED;
+                return color10;
             case 1024:
-                return Color.DEEPPINK;
+                return color11;
             case 2048:
-                return Color.MEDIUMVIOLETRED;
+                return color12;
             case 4096:
-                return Color.HONEYDEW;
+                return color13;
             case 8192:
-                return Color.LIGHTCORAL;
+                return color14;
+            case 16384:
+                return color15;
+            case 32768:
+                return color16;
             default:
                 return Color.NONE;
         }
@@ -284,130 +279,6 @@ public class Game2048 extends Game {
             for (int x = 0; x < SIDE; x++) {
                 setCellColoredNumber(x, y, gameField[y][x]);
             }
-        }
-    }
-
-    private void pasteText(String s, int startX, int startY ) {
-        char[] chars = s.toCharArray();
-        for (char c : chars) {
-            setCellValueEx(startX,startY, Color.GOLD, String.valueOf(c), Color.BLACK,80);
-            startX++;
-        }
-    }
-
-    public void drawScreenMenu(int WIDTH, int HEIGHT, Color color) {
-        setScreenSize(WIDTH,HEIGHT);
-        for (int i = 0; i < WIDTH; i++) {
-            for (int j = 0; j < HEIGHT; j++) {
-                setCellValueEx(i,j,color,"");
-            }
-        }
-    }
-
-    public void draw3x3Cube(int startX, int startY,Color color) {
-        for (int x = startX; x < startX + 3; x++) {
-            for (int y = startY; y < startY + 3; y++) {
-                setCellColor(x,y,color);
-            }
-        }
-        setCellColor(startX+1,startY+4,Color.RED);
-        setMenuGameObjects(startX + 1,startY + 4);
-    }
-
-    @Override
-    public void onMouseLeftClick(int x, int y) {
-        openTileMenu(x, y);
-        replaceMenu(x,y);
-        replaceAllBugs();
-        checkChose();
-    }
-
-    private void openTileMenu(int x, int y) {
-        MenuGameObject menuGameObject = menuGameObjects[y][x];
-
-        if (!menuGameObject.isOpen) {
-            setCellColor(x,y,Color.GREEN);
-            menuGameObject.isOpen = true;
-        } else {
-            menuGameObject.isOpen = false;
-        }
-    }
-
-    private void setMenuGameObjects(int x, int y) {
-        menuGameObjects[y][x] = new MenuGameObject(x,y,true,false);
-    }
-
-    private void replaceMenu(int aX, int y) {
-        for (MenuGameObject[] menuGameObject : menuGameObjects) {
-            for (int x = 0; x < MENU_WIDTH; x++) {
-                if (menuGameObject[x] != null) {
-                    if (menuGameObject[x].isFlag) {
-                        setCellColor(x,y,Color.RED);
-                    }
-                }
-            }
-        }
-        setCellColor(aX,y,Color.GREEN);
-    }
-
-    private void replaceAllBugs() {
-        // first line
-        setCellColor(4,10,Color.SILVER);
-        setCellColor(6,10,Color.SILVER);
-        setCellColor(9,10,Color.SILVER);
-        setCellColor(10,10,Color.SILVER);
-        setCellColor(14,10,Color.SILVER);
-        // second line
-        setCellColor(3,16,Color.SILVER);
-        setCellColor(6,16,Color.SILVER);
-        setCellColor(7,16,Color.SILVER);
-        setCellColor(10,16,Color.SILVER);
-        setCellColor(11,16,Color.SILVER);
-        setCellColor(15,16,Color.SILVER);
-        // third line
-        setCellColor(3,22,Color.SILVER);
-        setCellColor(4,22,Color.SILVER);
-        setCellColor(7,22,Color.SILVER);
-        setCellColor(8,22,Color.SILVER);
-        setCellColor(9,22,Color.SILVER);
-        setCellColor(11,22,Color.SILVER);
-        setCellColor(15,22,Color.SILVER);
-    }
-
-    private void checkChose() {
-        MenuGameObject Line1Chose1 = menuGameObjects[3][10];
-        MenuGameObject Line1Chose2 = menuGameObjects[7][10];
-        MenuGameObject Line1Chose3 = menuGameObjects[11][10];
-        if (Line1Chose1.isOpen) {
-            SIDE = 4;
-            sizeMapCase = true;
-        } else if (Line1Chose2.isOpen) {
-            SIDE = 5;
-            sizeMapCase = true;
-        } else if (Line1Chose3.isOpen) {
-            SIDE = 6;
-            sizeMapCase = true;
-        } else {
-            SIDE = 7;
-            sizeMapCase = true;
-        }
-        MenuGameObject Line2Chose1 = menuGameObjects[4][16];
-        MenuGameObject Line2Chose2 = menuGameObjects[9][16];
-        if (Line2Chose1.isOpen) {
-            stopPlay = 2048;
-        } else if (Line2Chose2.isOpen) {
-            stopPlay = 4096;
-        } else {
-            stopPlay = 8192;
-        }
-        MenuGameObject Line3Chose1 = menuGameObjects[6][22];
-        MenuGameObject Line3Chose2 = menuGameObjects[10][22];
-        if (Line3Chose1.isOpen) {
-            spawnInRound = 1;
-        } else if (Line3Chose2.isOpen) {
-            spawnInRound = 2;
-        } else {
-            spawnInRound = 3;
         }
     }
 }
