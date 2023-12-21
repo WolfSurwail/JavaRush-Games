@@ -3,6 +3,8 @@ package com.wolfsurwail.racer;
 import com.javarush.engine.cell.*;
 import com.wolfsurwail.racer.road.RoadManager;
 
+import java.util.Random;
+
 public class RacerGame extends Game {
     public static final int WIDTH = 64;
     public static final int HEIGHT = 64;
@@ -69,6 +71,13 @@ public class RacerGame extends Game {
         player.draw(this);
     }
 
+    public static Color getRandomColor() {
+        Color[] colors = {Color.GREEN,Color.LIGHTGREEN, Color.LIMEGREEN, Color.LIME, Color.MEDIUMSPRINGGREEN,Color.SPRINGGREEN};
+        Random random = new Random();
+        int index = random.nextInt(colors.length);
+        return colors[index];
+    }
+
     private void drawField() {
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
@@ -76,8 +85,13 @@ public class RacerGame extends Game {
                     setCellColor(x, y, Color.WHITE);
                 } else if (x >= ROADSIDE_WIDTH && x < WIDTH - ROADSIDE_WIDTH) {
                     setCellColor(x, y, Color.DIMGREY);
-                } else {
-                    setCellColor(x, y, Color.GREEN);
+                } else if (x == 13 || x == 50) {
+                    setCellColor(x,y,Color.BISQUE);
+                } else if(x == 12 || x == 51) {
+                    setCellColor(x,y,Color.BLACK);
+                }
+                else {
+                    setCellColor(x, y, getRandomColor());
                 }
             }
         }
